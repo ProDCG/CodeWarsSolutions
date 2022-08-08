@@ -12,4 +12,5 @@ std::string format_duration(int seconds) {
   const unsigned int yearSecs = 31536000, daySecs = 86400, hourSecs = 3600, minSecs = 60;
   
   tYears += (floor(seconds / yearSecs >= 1) ? (floor(seconds / yearSecs)) : 0);
+  tDays += (floor(seconds / daySecs >= 1) ? (floor(seconds / daySecs)) : 0);
 }

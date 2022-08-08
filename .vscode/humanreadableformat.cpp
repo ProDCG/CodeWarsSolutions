@@ -1,16 +1,27 @@
 #include <string>
-#include <cmath>
+#include <vector>
 
 std::string format_duration(int seconds) {
   if (seconds == 0) {
     return "now";
   }
   
-  unsigned int tYears = 0, tDays = 0, tHours = 0, tMinutes = 0, tSeconds = 0;
-  std::string time = "";
+  unsigned int years = (seconds / 31536000);
+  unsigned int days = (seconds / 86400) % 365;
+  unsigned int hours = (seconds / 3600) % 24;
+  unsigned int minutes = (seconds / 60) % 60;
+  seconds = (seconds % 60);
   
-  const unsigned int yearSecs = 31536000, daySecs = 86400, hourSecs = 3600, minSecs = 60;
+  std::vector<std::pair<unsigned int, std::string>> times = {{years, "year"}, {days, "days"}, {hours, "hour"}, {minutes, "minute"}, {seconds, "second"}};
+  std::string format = "";
   
-  tYears += (floor(seconds / yearSecs >= 1) ? (floor(seconds / yearSecs)) : 0);
-  tDays += (floor(seconds / daySecs >= 1) ? (floor(seconds / daySecs)) : 0);
+  for (int i = 0; i < times.size(); i++) {
+    if (times.at(i).first == 0) {
+      times.erase(i);
+    } else if (times.at(i).first > 1) {
+      times.at(i).second += "s";
+    }
+  }
+  
+  format = times.at(0).first + " " + times[times.begin()].second;
 }
